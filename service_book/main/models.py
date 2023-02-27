@@ -14,5 +14,5 @@ class Complaint(models.Model):
 class ServiceCompany(models.Model):
     ...
 
-class HDBK(models.Model):
+class Descriptions(models.Model):
     ...
