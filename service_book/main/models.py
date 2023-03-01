@@ -93,7 +93,8 @@ class RecoveryMethod(models.Model):
 class Machine(models.Model):
     modelMachine = models.ForeignKey(
         ModelMachine, to_field='name', on_delete=models.CASCADE)
-    factoryNumberMachine = models.CharField(max_length=64, unique=True)
+    factoryNumberMachine = models.CharField(
+        primary_key=True, max_length=64, unique=True)
     engine = models.ForeignKey(
         Engine, to_field='name', on_delete=models.CASCADE)
     factoryNumberEngene = models.CharField(max_length=64, unique=True)
@@ -128,12 +129,12 @@ class Service(models.Model):
     serviceCompany = models.ForeignKey(
         ServiceCompany, to_field='name', on_delete=models.CASCADE)
     machine = models.ForeignKey(
-        ModelMachine, to_field='name', on_delete=models.CASCADE)
+        Machine, to_field='factoryNumberMachine', on_delete=models.CASCADE)
 
 
 class Complainte(models.Model):
     machine = models.ForeignKey(
-        ModelMachine, to_field='name', on_delete=models.CASCADE)
+        Machine, to_field='factoryNumberMachine', on_delete=models.CASCADE)
     failureDate = models.DateField(auto_now_add=True)
     operatingTime = models.IntegerField(default=0)
     failurePart = models.ForeignKey(
