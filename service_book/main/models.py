@@ -1,12 +1,28 @@
 from django.db import models
 from datetime import date
-
+from django.contrib.auth.models import User
 
 # Create your models here.
 
 
 def getOperatingTime():
     ...
+
+
+class ServiceCompanyUser(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    serviceCompany = models.ForeignKey(
+        'ServiceCompany', to_field='name', on_delete=models.CASCADE)
+
+
+class ClientUser(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    clientCompany = models.ForeignKey(
+        'ClientCompany', to_field='name', on_delete=models.CASCADE)
+
+
+class ManagerUser(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
 
 
 class Parts(models.Model):
@@ -49,10 +65,12 @@ class ServiceCompany(models.Model):
         primary_key=True, blank=False, null=False, unique=True, max_length=64)
     description = models.CharField(default='описание', max_length=256)
 
+
 class MaintenanceCompany(models.Model):
     name = models.CharField(
         primary_key=True, blank=False, null=False, unique=True, max_length=64)
     description = models.CharField(default='описание', max_length=256)
+
 
 class ClientCompany(models.Model):
     name = models.CharField(
@@ -89,7 +107,7 @@ class Machine(models.Model):
         SteringAxel, to_field='name', on_delete=models.CASCADE)
     factoryNumberSteringAxel = models.CharField(max_length=64, unique=True)
     supplyContract = models.CharField(max_length=64)
-    shipingDate = models.DateField(auto_now_add=True)
+    shipingDate = models.DateField(default=date.today())
     receiver = models.CharField(max_length=64)
     deliveryAddress = models.CharField(max_length=256)
     equipment = models.CharField(
@@ -128,3 +146,5 @@ class Complainte(models.Model):
     downTime = models.IntegerField(default=0)
     serviceCompany = models.ForeignKey(
         ServiceCompany, to_field='name', on_delete=models.CASCADE)
+    maintenanceCompany = models.ForeignKey(
+        MaintenanceCompany, to_field='name', on_delete=models.CASCADE)
