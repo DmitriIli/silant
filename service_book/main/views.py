@@ -5,13 +5,25 @@ from .models import Machine
 
 
 def index(request):
+
     context = {}
+
     if not request.user.is_authenticated:
-        context = Machine.objects.all().values('modelMachine', 'factoryNumberMachine',
-                                               'engine', 'factoryNumberEngene', 'transmission',
+        context = Machine.objects.all().values('modelMachine','factoryNumberMachine',
+                                               'engine','factoryNumberEngine', 'transmission',
                                                'factoryNumberTransmission', 'driveAxel',
                                                'factoryNumberDriveAxel', 'steringAxel', 'factoryNumberSteringAxel')
-    else:
-        print(request.user)
 
-    return render(request, 'default.html', {'context':context},)
+    else:
+        context = Machine.objects.all().values()
+        
+    keys = context[0].keys()
+        
+
+    for item in context:
+        print(item)
+        for key in keys:
+            print(key)
+            print(item.get(key))
+
+    return render(request, 'index.html', {'context': context, 'keys': keys},)

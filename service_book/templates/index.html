@@ -1,0 +1,10 @@
+{% extends "default.html" %}
+{% block content %}
+ 
+    {% for item in context %}
+        {% for key in keys %}
+        
+        {{  item.key  }}
+        {% endfor %}
+    {% endfor %}
+{% endblock %}

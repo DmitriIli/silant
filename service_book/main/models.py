@@ -97,7 +97,7 @@ class Machine(models.Model):
         primary_key=True, max_length=64, unique=True)
     engine = models.ForeignKey(
         Engine, to_field='name', on_delete=models.CASCADE)
-    factoryNumberEngene = models.CharField(max_length=64, unique=True)
+    factoryNumberEngine = models.CharField(max_length=64, unique=True)
     transmission = models.ForeignKey(
         Transmission, to_field='name', on_delete=models.CASCADE)
     factoryNumberTransmission = models.CharField(max_length=64, unique=True)
